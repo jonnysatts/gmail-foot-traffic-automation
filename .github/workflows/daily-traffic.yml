@@ -6,6 +6,9 @@ on:
     - cron: '0 21 * * *'
   workflow_dispatch:  # Allows manual trigger from GitHub UI
 
+permissions:
+  contents: write
+
 jobs:
   update-traffic-data:
     runs-on: ubuntu-latest
