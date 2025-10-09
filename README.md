@@ -1,118 +1,114 @@
 # Gmail Foot Traffic Automation
 
-Automated pipeline that extracts hourly foot traffic data from VemCount emails and stores it in a Parquet file.
+**Fully automated** pipeline that extracts hourly foot traffic data from VemCount emails and stores it in a Parquet file.
 
-## Features
+## ✅ Fully Automated Setup
 
-- 🔄 **Daily automated updates** via GitHub Actions (runs at 7 AM Melbourne time)
-- 📊 **Historical backfill** capability (12+ months of data)
-- 💾 **Parquet storage** - efficient columnar format
-- 🏢 **Dual venue tracking** - Melbourne and Sydney
-- 📈 **Two metrics** - "Entering" and "Inside" counts
-- ⏰ **Operating hours tracking** - marks which hours venues are open
+This solution uses Google's Gmail API with OAuth, which works perfectly with forwarded emails and runs automatically via GitHub Actions.
 
-## Data Schema
+### One-Time Setup (15 minutes)
 
-The Parquet file contains the following columns:
+#### 1. Enable Gmail API & Get Credentials
 
-- `DateTime`: Timestamp of the hour
-- `Date`: Date (without time)
-- `Hour`: Hour of day (0-26, allowing for late hours)
-- `Venue`: "Melbourne" or "Sydney"
-- `Entering`: Number of people entering (with 0.95 multiplier applied)
-- `Inside`: Number of people inside
-- `IsOpen`: Boolean indicating if venue was open during this hour
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project (or select existing)
+3. Enable the Gmail API:
+   - Go to "APIs & Services" → "Library"
+   - Search for "Gmail API"
+   - Click "Enable"
+4. Create OAuth credentials:
+   - Go to "APIs & Services" → "Credentials"
+   - Click "Create Credentials" → "OAuth client ID"
+   - Choose "Desktop app"
+   - Download the credentials JSON file
+   - Rename it to `credentials.json`
 
-## Setup
-
-### 1. Gmail App Password
-
-1. Visit https://myaccount.google.com/apppasswords
-2. Enable 2-factor authentication if not already enabled
-3. Create app password named "GitHub Actions Traffic Bot"
-4. Save the 16-character password
-
-### 2. GitHub Secrets
-
-Add these secrets to your repository (Settings → Secrets → Actions):
-
-- `GMAIL_USER`: Your Gmail address
-- `GMAIL_APP_PASSWORD`: The 16-character app password from step 1
-
-### 3. Run Historical Backfill
-
-To populate historical data (12 months):
+#### 2. Initial Authorization (Run Locally Once)
 
 ```bash
+# Clone your repo
+cd ~/gmail-foot-traffic-automation
+
 # Install dependencies
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
-# Set environment variables
-export GMAIL_USER="your-email@gmail.com"
-export GMAIL_APP_PASSWORD="your-app-password"
+# Run initial setup (opens browser for authorization)
+python3 process_traffic_oauth.py
 
-# Run backfill (looks back 365 days)
-python process_traffic.py --backfill 365
+# This creates token.pickle file with your authorization
 ```
 
-### 4. Commit Initial Data
+When you run this the first time, it will:
+- Open your browser
+- Ask you to sign in to your Gmail account
+- Ask you to authorize the app
+- Save the authorization to `token.pickle`
+
+#### 3. Historical Backfill
 
 ```bash
-git add hourly_foot_traffic.parquet
-git commit -m "Initial historical data backfill"
+# Get 12 months of historical data
+python3 process_traffic_oauth.py --backfill 365
+```
+
+#### 4. Push to GitHub
+
+```bash
+# Add the token (IMPORTANT: token.pickle must be committed for Actions to work)
+git add token.pickle credentials.json hourly_foot_traffic.parquet
+
+# Commit
+git commit -m "Add OAuth credentials and historical data"
+
+# Push
 git push
 ```
 
-## Daily Automation
+**Security Note:** The `token.pickle` and `credentials.json` files contain sensitive data. Make sure your repository is **PRIVATE**. Never make it public with these files.
 
-After setup, GitHub Actions will:
-1. Run daily at 7 AM Melbourne time
-2. Check Gmail for new traffic emails
-3. Process any new data
-4. Update the Parquet file
-5. Commit and push changes automatically
+#### 5. Set Up GitHub Actions
 
-You can also manually trigger a run from the "Actions" tab in GitHub.
+The workflow is already configured in `.github/workflows/daily-traffic.yml`. It will:
+- Run daily at 7 AM Melbourne time
+- Use the committed OAuth token
+- Download new emails automatically
+- Update the parquet file
+- Commit and push changes
 
-## Manual Usage
+That's it! Now it runs automatically forever.
 
-```bash
-# Daily update (searches last 30 days)
-python process_traffic.py
+## How It Works
 
-# Custom backfill period
-python process_traffic.py --backfill 90
+### Daily Automation
+- **7 AM Melbourne time**: GitHub Actions triggers
+- **Searches Gmail**: Looks for new VemCount emails
+- **Downloads attachments**: Gets Excel files
+- **Processes data**: Extracts foot traffic numbers
+- **Updates parquet**: Merges with existing data
+- **Commits to GitHub**: Pushes updated file
 
-# Historical full backfill
-python process_traffic.py --backfill 365
-```
+### Data Schema
 
-## File Structure
+The Parquet file contains:
+- `DateTime`: Timestamp of the hour
+- `Date`: Date (without time)
+- `Hour`: Hour of day (0-26)
+- `Venue`: "Melbourne" or "Sydney"
+- `Entering`: People entering (0.95 multiplier applied)
+- `Inside`: People inside
+- `IsOpen`: Boolean for operating hours
 
-```
-.
-├── process_traffic.py           # Main processing script
-├── requirements.txt              # Python dependencies
-├── hourly_foot_traffic.parquet  # Output data file
-├── .github/
-│   └── workflows/
-│       └── daily-traffic.yml    # GitHub Actions workflow
-└── README.md                     # This file
-```
+### Manual Trigger
 
-## Venue Operating Hours
-
-**Melbourne & Sydney:**
-- Mon-Thu: 12:00 PM - 11:00 PM
-- Fri: 12:00 PM - 12:00 AM (midnight)
-- Sat: 12:00 PM - 1:00 AM
-- Sun: 12:00 PM - 11:00 PM
+You can manually run the automation anytime:
+1. Go to Actions tab in GitHub
+2. Select "Daily Foot Traffic Update"
+3. Click "Run workflow"
 
 ## Accessing the Data
 
 ### Download from GitHub
-The Parquet file is available directly in the repository at:
-`hourly_foot_traffic.parquet`
+The file is always at: `hourly_foot_traffic.parquet`
 
 ### Read in Python
 ```python
@@ -126,23 +122,44 @@ print(f"Date range: {df['Date'].min()} to {df['Date'].max()}")
 ### Read in R
 ```r
 library(arrow)
-
 df <- read_parquet('hourly_foot_traffic.parquet')
-head(df)
 ```
+
+## Files
+
+- `process_traffic_oauth.py` - Main OAuth-based script
+- `process_local_files.py` - Alternative: process manually downloaded files
+- `requirements.txt` - Python dependencies
+- `credentials.json` - OAuth app credentials (commit to private repo)
+- `token.pickle` - OAuth authorization token (commit to private repo)
+- `hourly_foot_traffic.parquet` - Output data file
+- `.github/workflows/daily-traffic.yml` - GitHub Actions automation
 
 ## Troubleshooting
 
-**No data found:**
-- Check that emails from `no-reply@vemcount.com` are in your inbox
-- Verify the email contains an Excel attachment with "Traffic By Hour" in the filename
+**"Token expired" errors:**
+- Run `python3 process_traffic_oauth.py` locally once to refresh
+- Commit the updated `token.pickle`
+- Push to GitHub
 
-**Authentication failed:**
-- Ensure Gmail app password is correct
-- Check that 2-factor authentication is enabled
-- Try regenerating the app password
+**No new data:**
+- Check if VemCount emails are still arriving
+- Verify emails contain "Hourly Foot Traffic" in subject
+- Check GitHub Actions logs for errors
 
-**Workflow not running:**
-- Check GitHub Actions is enabled for your repository
-- Verify secrets are set correctly
-- Check the Actions tab for error logs
+**Authorization issues:**
+- Delete `token.pickle`
+- Run `python3 process_traffic_oauth.py` to re-authorize
+- Commit new token
+
+## Why This Works (vs Other Solutions)
+
+✅ **OAuth instead of App Passwords** - Works with G Suite/Workspace  
+✅ **Gmail API instead of IMAP** - Handles forwarded emails properly  
+✅ **Token-based** - No passwords in GitHub secrets  
+✅ **Auto-refresh** - Token renews automatically  
+✅ **Fully automated** - Zero manual work after setup  
+
+## Maintenance
+
+**None required!** Once set up, this runs automatically forever. The OAuth token automatically refreshes, so you never need to re-authorize.

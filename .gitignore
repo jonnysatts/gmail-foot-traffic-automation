@@ -20,8 +20,8 @@ Thumbs.db
 
 # Test files
 test_*.py
-*.xlsx
-*.csv
 
-# Keep the parquet file (we want to commit it)
-!hourly_foot_traffic.parquet
+# IMPORTANT: DO NOT IGNORE THESE - They're needed for automation!
+# Keep credentials.json (OAuth app credentials)
+# Keep token.pickle (OAuth authorization)
+# Keep hourly_foot_traffic.parquet (the data file)

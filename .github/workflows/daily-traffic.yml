@@ -26,16 +26,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Run traffic processing script
-      env:
-        GMAIL_USER: ${{ secrets.GMAIL_USER }}
-        GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+    - name: Run traffic processing script with OAuth
       run: |
-        python process_traffic.py
+        python process_traffic_oauth.py
     
     - name: Commit and push if changed
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add hourly_foot_traffic.parquet
+        git add hourly_foot_traffic.parquet token.pickle
         git diff --quiet && git diff --staged --quiet || (git commit -m "Update foot traffic data - $(date +'%Y-%m-%d')" && git push)

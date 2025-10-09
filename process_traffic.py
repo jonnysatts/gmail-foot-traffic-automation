@@ -63,8 +63,8 @@ def find_traffic_emails(mail, days_back=30):
     """
     print(f"🔍 Searching for emails from {TRAFFIC_SENDER} (last {days_back} days)...")
     
-    # Select inbox (we'll search all emails, not a specific label)
-    mail.select('INBOX')
+    # Select [Gmail]/All Mail to search across all folders/labels
+    mail.select('"[Gmail]/All Mail"')
     
     # Search for emails from sender in last N days
     since_date = (datetime.now() - timedelta(days=days_back)).strftime("%d-%b-%Y")
