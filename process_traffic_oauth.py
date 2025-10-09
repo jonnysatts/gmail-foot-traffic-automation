@@ -72,7 +72,7 @@ def get_data_date_from_email_date(email_date_str):
     return data_date
 
 def search_traffic_emails(service, days_back=30):
-    """Search for traffic emails using Gmail API."""
+    """Search for traffic emails using Gmail API with pagination."""
     print(f"🔍 Searching for VemCount emails (last {days_back} days)...")
     
     # Calculate date for search
@@ -81,12 +81,37 @@ def search_traffic_emails(service, days_back=30):
     # Search query
     query = f'from:no-reply@vemcount.com subject:"Hourly Foot Traffic" after:{after_date}'
     
-    results = service.users().messages().list(userId='me', q=query).execute()
-    messages = results.get('messages', [])
+    all_messages = []
+    page_token = None
     
-    print(f"✅ Found {len(messages)} emails")
+    # Paginate through all results
+    while True:
+        if page_token:
+            results = service.users().messages().list(
+                userId='me', 
+                q=query, 
+                maxResults=100,
+                pageToken=page_token
+            ).execute()
+        else:
+            results = service.users().messages().list(
+                userId='me', 
+                q=query, 
+                maxResults=100
+            ).execute()
+        
+        messages = results.get('messages', [])
+        all_messages.extend(messages)
+        
+        page_token = results.get('nextPageToken')
+        if not page_token:
+            break
+        
+        print(f"  📄 Retrieved {len(all_messages)} emails so far...")
     
-    return messages
+    print(f"✅ Found {len(all_messages)} total emails")
+    
+    return all_messages
 
 def get_attachment(service, msg_id, attachment_id):
     """Download attachment from Gmail."""
