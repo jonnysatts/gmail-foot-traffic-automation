@@ -1,6 +1,29 @@
 # Gmail Foot Traffic Automation
 
-**Fully automated** pipeline that extracts hourly foot traffic data from VemCount emails and stores it in a Parquet file.
+**Fully automated** pipeline that extracts hourly foot traffic data from VemCount emails and stores it in a Parquet file with a live dashboard.
+
+## 🎯 What This Does
+
+- ✅ **Automatically pulls** foot traffic data from Gmail every day at 7 AM Melbourne time
+- ✅ **Processes Excel attachments** from VemCount emails
+- ✅ **Stores in Parquet format** for easy analysis
+- ✅ **Generates JSON for dashboard** - powers a real-time interactive visualization
+- ✅ **Commits to GitHub** - keeps everything synced and backed up
+- ✅ **5% discount applied** - automatically applies 0.95 multiplier to "Entering" traffic
+
+## 📊 Live Dashboard
+
+View your traffic data with an interactive React dashboard that:
+- Fetches live data from GitHub
+- Toggles between Melbourne and Sydney
+- Compares days of week
+- Shows "Entering" vs "Inside" metrics
+- Works anywhere - portable to any React environment
+
+**Dashboard URL**: The dashboard fetches from:
+`https://raw.githubusercontent.com/jonnysatts/gmail-foot-traffic-automation/main/traffic_data_compact.json`
+
+This means you can copy the dashboard code to Cursor, v0, or any other coding environment and it will automatically work with your latest data!
 
 ## ✅ Fully Automated Setup
 
@@ -51,11 +74,18 @@ When you run this the first time, it will:
 python3 process_traffic_oauth.py --backfill 365
 ```
 
-#### 4. Push to GitHub
+#### 4. Generate Dashboard JSON
 
 ```bash
-# Add the token (IMPORTANT: token.pickle must be committed for Actions to work)
-git add token.pickle credentials.json hourly_foot_traffic.parquet
+# Create the JSON file for the dashboard
+python3 generate_json.py
+```
+
+#### 5. Push to GitHub
+
+```bash
+# Add everything
+git add token.pickle credentials.json hourly_foot_traffic.parquet traffic_data_compact.json
 
 # Commit
 git commit -m "Add OAuth credentials and historical data"
@@ -66,30 +96,33 @@ git push
 
 **Security Note:** The `token.pickle` and `credentials.json` files contain sensitive data. Make sure your repository is **PRIVATE**. Never make it public with these files.
 
-#### 5. Set Up GitHub Actions
+#### 6. GitHub Actions - Already Configured!
 
-The workflow is already configured in `.github/workflows/daily-traffic.yml`. It will:
+The workflow is already set up in `.github/workflows/daily-traffic.yml`. It will:
 - Run daily at 7 AM Melbourne time
 - Use the committed OAuth token
 - Download new emails automatically
 - Update the parquet file
+- **Generate fresh JSON for dashboard**
 - Commit and push changes
 
 That's it! Now it runs automatically forever.
 
-## How It Works
+## 🔄 How It Works
 
-### Daily Automation
-- **7 AM Melbourne time**: GitHub Actions triggers
-- **Searches Gmail**: Looks for new VemCount emails
-- **Downloads attachments**: Gets Excel files
-- **Processes data**: Extracts foot traffic numbers
-- **Updates parquet**: Merges with existing data
-- **Commits to GitHub**: Pushes updated file
+### Daily Automation Flow
+1. **7 AM Melbourne time**: GitHub Actions triggers
+2. **Searches Gmail**: Looks for new VemCount emails
+3. **Downloads attachments**: Gets Excel files
+4. **Processes data**: Extracts foot traffic numbers (applies 5% discount)
+5. **Updates parquet**: Merges with existing data
+6. **Generates JSON**: Creates compact dashboard data
+7. **Commits to GitHub**: Pushes updated files
+8. **Dashboard auto-updates**: Fetches latest data automatically
 
 ### Data Schema
 
-The Parquet file contains:
+**Parquet file** (`hourly_foot_traffic.parquet`):
 - `DateTime`: Timestamp of the hour
 - `Date`: Date (without time)
 - `Hour`: Hour of day (0-26)
@@ -98,6 +131,11 @@ The Parquet file contains:
 - `Inside`: People inside
 - `IsOpen`: Boolean for operating hours
 
+**Dashboard JSON** (`traffic_data_compact.json`):
+- Aggregated averages by Venue, Day of Week, and Hour
+- 336 records (2 venues × 7 days × 24 hours)
+- Compact format (~36KB) for fast loading
+
 ### Manual Trigger
 
 You can manually run the automation anytime:
@@ -105,18 +143,25 @@ You can manually run the automation anytime:
 2. Select "Daily Foot Traffic Update"
 3. Click "Run workflow"
 
-## Accessing the Data
+## 📥 Accessing the Data
 
 ### Download from GitHub
-The file is always at: `hourly_foot_traffic.parquet`
+- **Parquet file**: `hourly_foot_traffic.parquet`
+- **Dashboard JSON**: `traffic_data_compact.json`
 
 ### Read in Python
 ```python
 import pandas as pd
 
+# Read the full dataset
 df = pd.read_parquet('hourly_foot_traffic.parquet')
 print(df.head())
 print(f"Date range: {df['Date'].min()} to {df['Date'].max()}")
+
+# Or read the dashboard JSON
+import json
+with open('traffic_data_compact.json', 'r') as f:
+    data = json.load(f)
 ```
 
 ### Read in R
@@ -125,17 +170,25 @@ library(arrow)
 df <- read_parquet('hourly_foot_traffic.parquet')
 ```
 
-## Files
+### Use in Dashboard
+The React dashboard automatically fetches from:
+```javascript
+fetch('https://raw.githubusercontent.com/jonnysatts/gmail-foot-traffic-automation/main/traffic_data_compact.json')
+```
+
+## 📁 Files
 
 - `process_traffic_oauth.py` - Main OAuth-based script
+- `generate_json.py` - Converts parquet to JSON for dashboard
 - `process_local_files.py` - Alternative: process manually downloaded files
 - `requirements.txt` - Python dependencies
 - `credentials.json` - OAuth app credentials (commit to private repo)
 - `token.pickle` - OAuth authorization token (commit to private repo)
-- `hourly_foot_traffic.parquet` - Output data file
+- `hourly_foot_traffic.parquet` - Full historical data
+- `traffic_data_compact.json` - Aggregated data for dashboard
 - `.github/workflows/daily-traffic.yml` - GitHub Actions automation
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 **"Token expired" errors:**
 - Run `python3 process_traffic_oauth.py` locally once to refresh
@@ -147,19 +200,34 @@ df <- read_parquet('hourly_foot_traffic.parquet')
 - Verify emails contain "Hourly Foot Traffic" in subject
 - Check GitHub Actions logs for errors
 
+**Dashboard not updating:**
+- Check that `traffic_data_compact.json` is in your repo
+- Verify GitHub Actions is running successfully
+- Dashboard fetches from GitHub raw URL - might be cached (wait a few minutes)
+
 **Authorization issues:**
 - Delete `token.pickle`
 - Run `python3 process_traffic_oauth.py` to re-authorize
 - Commit new token
 
-## Why This Works (vs Other Solutions)
+## 🎯 Why This Works (vs Other Solutions)
 
 ✅ **OAuth instead of App Passwords** - Works with G Suite/Workspace  
 ✅ **Gmail API instead of IMAP** - Handles forwarded emails properly  
 ✅ **Token-based** - No passwords in GitHub secrets  
 ✅ **Auto-refresh** - Token renews automatically  
-✅ **Fully automated** - Zero manual work after setup  
+✅ **Fully automated** - Zero manual work after setup
+✅ **Dashboard-ready** - JSON auto-generated for visualization
+✅ **Portable** - Dashboard works in any environment
 
-## Maintenance
+## 🔧 Maintenance
 
 **None required!** Once set up, this runs automatically forever. The OAuth token automatically refreshes, so you never need to re-authorize.
+
+## 🚀 Next Steps
+
+The current dashboard shows foot traffic patterns. Future enhancements planned:
+- **Labor cost overlay** - Compare staffing levels to traffic
+- **Efficiency metrics** - Staff-to-customer ratios by hour
+- **Cost optimization** - Identify overstaffing/understaffing periods
+- **Scheduling recommendations** - Data-driven staff scheduling
