@@ -1155,16 +1155,16 @@
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 0,
-    "Entering": 2.75,
-    "Inside": 4.34,
+    "Entering": 2.7,
+    "Inside": 4.29,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 1,
-    "Entering": 2.05,
-    "Inside": 1.33,
+    "Entering": 2.02,
+    "Inside": 1.32,
     "IsOpen": false
   },
   {
@@ -1172,15 +1172,15 @@
     "DayOfWeek": "Wednesday",
     "Hour": 2,
     "Entering": 0.31,
-    "Inside": -0.95,
+    "Inside": -0.92,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 3,
-    "Entering": 0.21,
-    "Inside": -0.98,
+    "Entering": 0.2,
+    "Inside": -0.95,
     "IsOpen": false
   },
   {
@@ -1188,14 +1188,14 @@
     "DayOfWeek": "Wednesday",
     "Hour": 4,
     "Entering": 0.13,
-    "Inside": -1.03,
+    "Inside": -1.0,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 5,
-    "Entering": 0.21,
+    "Entering": 0.2,
     "Inside": -0.05,
     "IsOpen": false
   },
@@ -1203,144 +1203,144 @@
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 6,
-    "Entering": 0.36,
-    "Inside": -0.2,
+    "Entering": 0.38,
+    "Inside": -0.18,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 7,
-    "Entering": 1.37,
-    "Inside": -0.2,
+    "Entering": 1.34,
+    "Inside": -0.18,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 8,
-    "Entering": 4.62,
-    "Inside": 2.28,
+    "Entering": 4.68,
+    "Inside": 2.35,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 9,
-    "Entering": 5.76,
-    "Inside": 3.98,
+    "Entering": 6.12,
+    "Inside": 4.23,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 10,
-    "Entering": 10.32,
-    "Inside": 8.78,
+    "Entering": 10.27,
+    "Inside": 8.95,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 11,
-    "Entering": 12.74,
-    "Inside": 13.84,
+    "Entering": 12.67,
+    "Inside": 13.98,
     "IsOpen": false
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 12,
-    "Entering": 45.24,
-    "Inside": 42.62,
+    "Entering": 45.13,
+    "Inside": 42.69,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 13,
-    "Entering": 37.61,
-    "Inside": 51.89,
+    "Entering": 37.43,
+    "Inside": 52.06,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 14,
-    "Entering": 46.86,
-    "Inside": 60.7,
+    "Entering": 46.62,
+    "Inside": 60.46,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 15,
-    "Entering": 43.58,
-    "Inside": 65.41,
+    "Entering": 43.52,
+    "Inside": 65.38,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 16,
-    "Entering": 48.75,
-    "Inside": 72.12,
+    "Entering": 48.44,
+    "Inside": 71.98,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 17,
-    "Entering": 98.38,
-    "Inside": 123.19,
+    "Entering": 99.06,
+    "Inside": 123.88,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 18,
-    "Entering": 135.08,
-    "Inside": 199.59,
+    "Entering": 134.97,
+    "Inside": 199.86,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 19,
-    "Entering": 67.88,
-    "Inside": 209.55,
+    "Entering": 67.67,
+    "Inside": 209.57,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 20,
-    "Entering": 40.02,
-    "Inside": 177.2,
+    "Entering": 40.05,
+    "Inside": 177.14,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 21,
-    "Entering": 19.49,
-    "Inside": 74.38,
+    "Entering": 19.28,
+    "Inside": 74.03,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 22,
-    "Entering": 4.94,
-    "Inside": 10.23,
+    "Entering": 5.06,
+    "Inside": 10.15,
     "IsOpen": true
   },
   {
     "Venue": "Melbourne",
     "DayOfWeek": "Wednesday",
     "Hour": 23,
-    "Entering": 2.11,
-    "Inside": 6.05,
+    "Entering": 2.08,
+    "Inside": 5.97,
     "IsOpen": false
   },
   {
@@ -2499,16 +2499,16 @@
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 0,
-    "Entering": 1.26,
-    "Inside": 10.28,
+    "Entering": 1.24,
+    "Inside": 10.2,
     "IsOpen": false
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 1,
-    "Entering": 0.79,
-    "Inside": 8.58,
+    "Entering": 0.77,
+    "Inside": 8.52,
     "IsOpen": false
   },
   {
@@ -2516,7 +2516,7 @@
     "DayOfWeek": "Wednesday",
     "Hour": 2,
     "Entering": 0.37,
-    "Inside": 7.33,
+    "Inside": 7.29,
     "IsOpen": false
   },
   {
@@ -2524,7 +2524,7 @@
     "DayOfWeek": "Wednesday",
     "Hour": 3,
     "Entering": 0.25,
-    "Inside": 7.33,
+    "Inside": 7.29,
     "IsOpen": false
   },
   {
@@ -2532,7 +2532,7 @@
     "DayOfWeek": "Wednesday",
     "Hour": 4,
     "Entering": 0.25,
-    "Inside": 7.33,
+    "Inside": 7.29,
     "IsOpen": false
   },
   {
@@ -2563,32 +2563,32 @@
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 8,
-    "Entering": 2.17,
-    "Inside": 1.98,
+    "Entering": 2.16,
+    "Inside": 1.95,
     "IsOpen": false
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 9,
-    "Entering": 1.5,
-    "Inside": 2.72,
+    "Entering": 1.48,
+    "Inside": 2.68,
     "IsOpen": false
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 10,
-    "Entering": 2.06,
-    "Inside": 3.38,
+    "Entering": 2.03,
+    "Inside": 3.32,
     "IsOpen": false
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 11,
-    "Entering": 3.38,
-    "Inside": 4.88,
+    "Entering": 3.33,
+    "Inside": 4.8,
     "IsOpen": false
   },
   {
@@ -2596,95 +2596,95 @@
     "DayOfWeek": "Wednesday",
     "Hour": 12,
     "Entering": 21.86,
-    "Inside": 17.55,
+    "Inside": 17.49,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 13,
-    "Entering": 18.94,
-    "Inside": 22.94,
+    "Entering": 18.84,
+    "Inside": 22.72,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 14,
-    "Entering": 17.69,
-    "Inside": 26.36,
+    "Entering": 17.73,
+    "Inside": 26.18,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 15,
-    "Entering": 23.5,
-    "Inside": 33.42,
+    "Entering": 23.38,
+    "Inside": 33.23,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 16,
-    "Entering": 26.01,
-    "Inside": 40.09,
+    "Entering": 26.16,
+    "Inside": 40.14,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 17,
-    "Entering": 58.72,
-    "Inside": 73.7,
+    "Entering": 58.96,
+    "Inside": 73.91,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 18,
-    "Entering": 95.85,
-    "Inside": 140.02,
+    "Entering": 95.96,
+    "Inside": 140.34,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 19,
-    "Entering": 59.09,
-    "Inside": 155.77,
+    "Entering": 58.91,
+    "Inside": 155.98,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 20,
-    "Entering": 39.89,
-    "Inside": 132.23,
+    "Entering": 39.62,
+    "Inside": 132.54,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 21,
-    "Entering": 21.17,
-    "Inside": 45.83,
+    "Entering": 21.21,
+    "Inside": 45.85,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 22,
-    "Entering": 3.83,
-    "Inside": 13.69,
+    "Entering": 3.79,
+    "Inside": 13.55,
     "IsOpen": true
   },
   {
     "Venue": "Sydney",
     "DayOfWeek": "Wednesday",
     "Hour": 23,
-    "Entering": 1.45,
-    "Inside": 12.55,
+    "Entering": 1.43,
+    "Inside": 12.43,
     "IsOpen": false
   }
 ]
